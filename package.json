@@ -5,7 +5,7 @@
   "description": "01-fundamentos NodeJs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node --watch src/server.js"
   },
   "repository": {
     "type": "git",
