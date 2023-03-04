@@ -22,15 +22,30 @@ import http from 'node:http'
 
 // HTTP Status Code
 
+
+// Importação de clientes via CSV (Excel)
+// 1gb - 1.000.000
+// POST /upload import.csv
+
+// 10mb/s - 100s
+
+// 100s -> Inserção no banco de dados
+
+// 10mb/s -> 10.000
+
+// Readable Streams / Writable Streams
+
 const users = []
 
 const server = http.createServer((req, res) => {
   const { method, url } = req
+
   if (method === 'GET' && url === '/users') {
     return res
       .setHeader('Content-type', 'application/json')
       .end(JSON.stringify(users))
   }
+
   if (method === 'POST' && url === '/users') {
     users.push({
       id: 1,
