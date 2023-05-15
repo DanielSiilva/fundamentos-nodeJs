@@ -12,7 +12,7 @@ import http from 'node:http'
 //Iniciando o servidor
 
 const server = http.createServer((req, res) =>{
-    return res.end('Hello Word')
+    return res.end('Hello Word: NodeJs: Fundamentos do Node')
 })
 
 //Expecificanod a porta do servidor
