@@ -5,7 +5,8 @@
   "description": "01-fundamentos NodeJs",
   "main": "index.js",
   "scripts": {
-    "dev": "node --watch src/server.js"
+    "dev": "node --watch src/server.js",
+    "test": "node --watch src/test/server.api.js"
   },
   "keywords": [],
   "author": "",
