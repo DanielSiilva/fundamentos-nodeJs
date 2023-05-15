@@ -31,6 +31,9 @@ import http from 'node:http'
 
 // Cabeçalhos (Requisição/resposta) => Metadados
 
+// HTTP Status Code 
+// => https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+
 const users = []
 
 const server = http.createServer((req, res) =>{
@@ -48,11 +51,12 @@ const server = http.createServer((req, res) =>{
             name: 'Jonh Doe',
             email: 'jonhdoe@example.com'
         })
-        return res.end('Criação de usuários ')
+        // WriteHead: Metodo para informar o status code 
+        return res.writeHead(201).end()
     }
 
 
-    return res.end('Hello Word: NodeJs: Fundamentos do Node')
+    return res.writeHead(404).end()
 })
 
 // Expecificando a porta do servidor
