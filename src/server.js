@@ -36,28 +36,38 @@ import http from 'node:http'
 
 const users = []
 
-const server = http.createServer((req, res) =>{
-    const {method, url} = req
-    if(method === 'GET' && url === '/users'){
-        //Early return
-        return res
-            .setHeader('Content-type', 'application/json')
-            .end(JSON.stringify(users))
-    }
+const server = http.createServer(async (req, res) => {
+  const { method, url } = req
 
-    if(method === 'POST' && url === '/users'){
-        users.push({
-            id:1,
-            name: 'Jonh Doe',
-            email: 'jonhdoe@example.com'
-        })
-        // WriteHead: Metodo para informar o status code 
-        return res.writeHead(201).end()
-    }
+  const buffers = []
 
+  for await (const chunk of req) {
+    buffers.push(chunk)
+  }
 
-    return res.writeHead(404).end()
+  try {
+    req.body = JSON.parse(Buffer.concat(buffers).toString())
+  } catch {
+    req.body = null
+  }
+
+  if (method === 'GET' && url === '/users') {
+    return res
+      .setHeader('Content-type', 'application/json')
+      .end(JSON.stringify(users))
+  }
+
+  if (method === 'POST' && url === '/users') {
+    const { name, email } = req.body
+
+    users.push({
+      id: 1,
+      name,
+      email,
+    })
+
+    return res.writeHead(201).end()
+  }
+  return res.writeHead(404).end()
 })
-
-// Expecificando a porta do servidor
 server.listen(3333)
