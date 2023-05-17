@@ -7,9 +7,6 @@
 // const http = require('http')
 
 // Usando ESModules
-import http from 'node:http'
-import { json } from './middlewares/json.js'
-
 //Iniciando o servidor
 
 // - HTTP
@@ -36,7 +33,11 @@ import { json } from './middlewares/json.js'
 // => https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
 
 
-const users = []
+import http from 'node:http'
+import { Database } from './database.js'
+import { json } from './middlewares/json.js'
+
+const database = new Database()
 
 const server = http.createServer(async (req, res) => {
   const { method, url } = req
@@ -44,17 +45,22 @@ const server = http.createServer(async (req, res) => {
   await json(req, res)
 
   if (method === 'GET' && url === '/users') {
-    return res
-      .end(JSON.stringify(users))
+    const users = database.select('users')
+
+    return res.end(JSON.stringify(users))
   }
 
   if (method === 'POST' && url === '/users') {
     const { name, email } = req.body
-    users.push({
+
+    const user = {
       id: 1,
       name,
       email,
-    })
+    }
+
+    database.insert('users', user)
+
     return res.writeHead(201).end()
   }
   return res.writeHead(404).end()
