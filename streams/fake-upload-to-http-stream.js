@@ -14,6 +14,7 @@ class OneToHundredStream extends Readable {
     }, 1000);
   }
 }
+
 fetch('http://localhost:3334', {
   method: 'POST',
   body: new OneToHundredStream(),

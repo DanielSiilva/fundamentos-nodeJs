@@ -33,9 +33,11 @@
 // => https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
 
 
+
 import http from 'node:http'
 import { Database } from './database.js'
 import { json } from './middlewares/json.js'
+
 
 const database = new Database()
 
@@ -65,4 +67,6 @@ const server = http.createServer(async (req, res) => {
   }
   return res.writeHead(404).end()
 })
+
+
 server.listen(3333)
